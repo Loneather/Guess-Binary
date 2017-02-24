@@ -1,18 +1,23 @@
 # Guess-Binary
 --DIRECTORIES-- 
+
 /src/	contains the source files for the programm.
 		*guessgafun.c contains the main functions and others
 		*functions.c contains the functions used by guessga 
 /obj/	contains the object files of the above source-files 
 /bin/	contains the executable file
+
 --COMPILATION
+
 when in folder src run the following commands 
 --$ gcc -c guessga.c -o ../obj/guessga.o -lm 
 --$ gcc -c functions.c -o ../obj/functions.o 
 change folder to obj and run 
 --$ gcc functions.o guessga.o -o ../bin/guessga -lm 
 to run the programm change directory to bin and run normally 
+
 --DESCRIPTION
+
 All the parameters are determined as constants NOT as macros   . 
 The number that this genetic algorithm is to guess is given from the standard input by the user  .
 The programm   also   uses  the   math.h  library as  well asthe time.h and stdlib.h/stdio.h .
