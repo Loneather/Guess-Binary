@@ -16,6 +16,7 @@ int main(void)
 	char  ch = 0 ;
 	int   char_count = 0 ,LENGTH = 0 ,buf[100];
 
+	printf("Give number for programm to find ");
 	for (i = 0; i < 100; ++i)
 	{
 		scanf("%c" ,&ch);
@@ -34,7 +35,7 @@ int main(void)
 	int specimen[LENGTH] ;
 	for (i = 0; i < LENGTH; ++i)
 	{
-		specimen[i] = buf[i] ;		
+		specimen[i] = buf[i] ;
 	}
 
     int **population = (int **)malloc(POPL * sizeof(int *));
@@ -57,8 +58,7 @@ int main(void)
 	double sumofbins = 0 ;
 	double check_sel = 0 ,check_cross = 0 ,check_mut = 0 ,check_tour = 0;
 	int    gencount = 0 ;
-	double maxfit = 0 ;
-	int    k ,start = 0 ,j ;
+	int    k ,j ;
 	int    tempcount ,counta ,countb ;
 	int    fit_temp = 0 ,champ_a = 0 ,champ_b = 0 ;
 	int    max_place ;
