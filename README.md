@@ -1,4 +1,21 @@
 # Guess-Binary
+
+Description : This programm guesses a binary string that the user inputs using evolutionary computation
+methods
+
+
+# Table of Contents
+
+* [Directories](#contents)
+
+# <a name="contents"></a>Contents
+* "src"
+** this directory contains the source code of the programm 
+
+*"bin"
+** this directory contains the executable programm 
+
+
 --DIRECTORIES-- 
 
 /src/	contains the source files for the programm.
