@@ -4,18 +4,11 @@
 /src/	contains the source files for the programm.
 		*guessgafun.c contains the main functions and others
 		*functions.c contains the functions used by guessga 
-/obj/	contains the object files of the above source-files 
+ 
 /bin/	contains the executable file
 
 --COMPILATION
-
-when in folder src run the following commands 
---$ gcc -c guessga.c -o ../obj/guessga.o -lm 
---$ gcc -c functions.c -o ../obj/functions.o 
-change folder to obj and run 
---$ gcc functions.o guessga.o -o ../bin/guessga -lm 
-to run the programm change directory to bin and run normally 
-
+just run make on the terminal and let makefile do the rest
 --DESCRIPTION
 
 All the parameters are determined as constants NOT as macros   . 
@@ -33,22 +26,27 @@ To change the parameters you have to change the source file and then re-compile 
 
 
 Initial Parameters
+
 --------------------------------------------------------------------------------
+
 Name 	Value 		Description
+
 --------------------------------------------------------------------------------
+
 POPL 	10		Sets the population number 
 GENS 	50		Sets the maximum number of generations
 p_mut	0.1		Sets the possibility of mutation 
 p_cross 0.3 		Sets the possibility of crossover
 p_tourn 0.65		Sets the possibility of the fittest wining the tournament 
 FITTEST LENGTH^2	Sets the FT parameter 
+
 --------------------------------------------------------------------------------
 
 --Return Values 
 1 Evolution ended after reaching the max generations 
 2 Evolution ended after reaching the Fittest threshold 
 
--Libraries
+----Libraries
 stdio
 stdlib
 time 
