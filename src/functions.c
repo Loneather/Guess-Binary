@@ -1,9 +1,10 @@
-#include "guessga.h"
+#include "functions.h"
 #include <time.h>
 #include <stdlib.h>
 #include <stdio.h>
 
-int random0or1(){
+int random0or1(void)
+{
     
     if (rand() % 2 == 0)
     {
@@ -15,7 +16,8 @@ int random0or1(){
 }
 
 /* Fitness function F = k^2 ,where k number of equal bits */
-int fitness(int *purespecimen , int *checkspecimen ,int length){
+int fitness(int *purespecimen , int *checkspecimen ,int length)
+{
     int k , i ;
     k = 0 ;
     for (i = 0; i < length; ++i)
@@ -28,7 +30,8 @@ int fitness(int *purespecimen , int *checkspecimen ,int length){
     return (k*k) ;
 }
 
-double random0to1(){
+double random0to1(void)
+{
     double getrandom ;
     getrandom = rand() ;
 
@@ -38,7 +41,8 @@ double random0to1(){
         return random0to1() ;
 }
 
-int rand_interval(int max){ /* Source : lists.di.uoa.gr */
+int rand_interval(int max)
+{
 	int random ;
 	const int range = 1 + max ;
     const int buckets = RAND_MAX / range ;
@@ -52,20 +56,10 @@ int rand_interval(int max){ /* Source : lists.di.uoa.gr */
 }
 
 /* Swaps the values of the 2 arrays up to cross */
-void crossover(int *a,int *b ,int length){	
-    int cross = rand_interval(length - 1) ;
-    int temp[length] ;
-    
-    int i ;
-    for (i = 0; i < cross; ++i)	
-    {
-        temp[i] = a[i] ;
-        a[i] = b[i] ;
-        b[i] = temp[i] ;
-    }
-}
-void merge_temp(int *x,int *y,int size ,int length) /* Makes temporary population into current */ 
+
+void merge_temp(int **x,int **y,int size ,int length) /* Makes temporary population into current */ 
 {
+    int i , j ;
     for (i = 0; i < size; ++i)
     {
         for (j = 0; j < length; ++j)
@@ -74,8 +68,9 @@ void merge_temp(int *x,int *y,int size ,int length) /* Makes temporary populatio
         }
     }
 }
-void clear_array(int x,int size,int length)     /* Sets all values of array to zero */
+void clear_array(int **x,int size,int length)     /* Sets all values of array to zero */
 {
+    int i , j ;
     for (i = 0; i < size; ++i)
     {
         for (j = 0; i < length; ++j)
@@ -84,18 +79,18 @@ void clear_array(int x,int size,int length)     /* Sets all values of array to z
         }
     }
 }
-void init_population(int *population,int size ,int length)
+void init_population(int **population,int size ,int length)
 {
     int i ,j ;
     for (i = 0; i < size; ++i)
     {
-        for (j = 0; j < count; ++j)
+        for (j = 0; j < length; ++j)
         {
             population[i][j] = random0or1();
         }
     }
 }
-double get_average_population(int x,int specimen ,int size ,int length)
+double get_average_population(int **x,int *specimen ,int size ,int length)
 {
     int sum = 0 ,i ;
     for (i = 0; i < size; ++i)
@@ -104,12 +99,12 @@ double get_average_population(int x,int specimen ,int size ,int length)
     }
     return ((double) (sum / size));
 }
-int get_max_member(int x ,int specimen,int size,int length,int *place)
+int get_max_member(int **x ,int *specimen,int size,int length,int *place)
 {
-    int i ,max = 0 ,place = 0 ;
+    int i ,max = 0 ,tmp ;
     max = fitness(x[0],specimen,length);
 
-    for (i = 1; i < ; ++i)
+    for (i = 1; i < size; ++i)
     {
         tmp = fitness(x[i],specimen,length);
         if (tmp > max)

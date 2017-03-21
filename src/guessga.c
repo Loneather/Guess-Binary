@@ -1,8 +1,10 @@
-#include "guessga.h"
 #include <stdio.h>
 #include <time.h>
 #include <stdlib.h>
 #include <math.h>
+
+#include "functions.h"
+#include "genoperators.h"
 
 const int POPL = 10 ;
 const int GENS = 50 ;
@@ -54,13 +56,9 @@ int main(void)
 	double avf_archive[GENS+1] ;
 	double bins[POPL + 1] ;
 
-	double fitsum ;
-	double sumofbins = 0 ;
-	double check_sel = 0 ,check_cross = 0 ,check_mut = 0 ,check_tour = 0;
+	double fitsum ,check_cross ;
 	int    gencount = 0 ;
-	int    k ,j ;
-	int    tempcount ,counta ,countb ;
-	int    fit_temp = 0 ,champ_a = 0 ,champ_b = 0 ;
+	int    counta ,countb ;
 	int    max_place ;
 	int    findmax ,findplace ;
 
@@ -75,7 +73,7 @@ int main(void)
 
 	get_average_population(population,specimen,POPL,LENGTH);
 	get_max_member(population,specimen,POPL,LENGTH,&max_place);
-
+	maxf_archive[0] = fitness(specimen,population[max_place],LENGTH);
 	/* Saves max population */
 	for (i = 0; i < LENGTH; ++i)
 	{
@@ -99,54 +97,15 @@ int main(void)
 		 } 
 
 		/* Create ranges */
-		sumofbins = 0 ;
 		bins[0] = 0 ;
 		for (i = 1; i < POPL + 1; ++i)
 		{
-			bins[i] = (fitness(specimen,population[i]) / fitsum) + bins[i-1] ; 
+			bins[i] = (fitness(specimen,population[i],LENGTH) / fitsum) + bins[i-1] ; 
 		}
 
 
-		roullette_wheel_selection(temppop,POPL,LENGTH,population,bins);
-
-		/* Tournament Selection */
-		/* See README for details on method */
-		for (i = 0; i < POPL/2; ++i)
-		{
-			check_tour = random0to1() ;
-			champ_a = fitness(specimen,temppop[i],LENGTH);
-			champ_b = fitness(specimen,temppop[POPL - 1 - i],LENGTH) ;
-			if (check_tour < p_tourn)
-			{
-				if (champ_a > champ_b )
-				{
-					for (j = 0; j < LENGTH; ++j)
-					{
-						temppop[POPL - 1 - i][j] = temppop[i][j];
-					}
-				}
-				else
-					for (j = 0; j < LENGTH; ++j)
-					{
-						temppop[i][j] = temppop[POPL - 1 - i][j];
-					}
-			}
-			else
-			{
-				if (champ_a < champ_b )
-				{
-					for (j = 0; j < LENGTH; ++j)
-					{
-						temppop[POPL - 1 - i][j] = temppop[i][j];
-					}
-				}
-				else
-					for (j = 0; j < LENGTH; ++j)
-					{
-						temppop[i][j] = temppop[POPL - 1 - i][j];
-					}
-			}
-		}
+		roullete_wheel_selection(temppop,POPL,LENGTH,population,bins);
+		tournament_selection(temppop,specimen,POPL,LENGTH,p_tourn);
 
 		/* Crossover */ 
 		counta = 0 ;
@@ -170,22 +129,12 @@ int main(void)
 
 		merge_temp(temppop,population,POPL,LENGTH);
 		
-		/* Find fittest and average of this population */
-		max_place = 0 ;
-		for (i = 0; i < POPL; ++i)
-		{
-			fit_temp = fitness(specimen,population[i],LENGTH);
-			avf_archive[gencount] = avf_archive[gencount] + fit_temp ;
-			if (fit_temp > maxf_archive[gencount])
-			{
-				maxf_archive[gencount] = fit_temp ;
-				max_place = i ;
-			}
-		}
-		avf_archive[gencount] = avf_archive[gencount] / ((double) POPL) ;
+		get_max_member(population,specimen,POPL,LENGTH,&max_place);
+		get_average_population(population,specimen,POPL,LENGTH);
+		maxf_archive[gencount] = fitness(specimen,population[max_place],LENGTH);
 		for (i = 0; i < LENGTH; ++i)
 		{
-			f_archive[gencount][i] = population[max_place][i] ;
+			f_archive[gencount][i] = population[max_place][i] ; /* Store fittest */
 		}
 		
 		/* Print the results of current generation */		
