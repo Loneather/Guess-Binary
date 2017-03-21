@@ -1,70 +1,26 @@
-# Guess-Binary
 
-Description : This programm guesses a binary string that the user inputs using evolutionary computation
+## Introduction
+This programm guesses a binary string that the user inputs using evolutionary computation
 methods
 
 
-# Table of Contents
+## Motivation
+This project was developed as part of a Programming Course.I am using it exercise programming various genetic programming techniques.I would be glad if you contributed .
 
-* [Directories](#contents)
+## Installation
 
-# <a name="contents"></a>Contents
-* "src"
-** this directory contains the source code of the programm 
+While on main folder run :
 
-*"bin"
-** this directory contains the executable programm 
+	$make 
+	$make clean
+## Execution 
 
+On the main folder run :
 
---DIRECTORIES-- 
-
-/src/	contains the source files for the programm.
-		*guessgafun.c contains the main functions and others
-		*functions.c contains the functions used by guessga 
- 
-/bin/	contains the executable file
-
---COMPILATION
-just run make on the terminal and let makefile do the rest
---DESCRIPTION
-
-All the parameters are determined as constants NOT as macros   . 
-The number that this genetic algorithm is to guess is given from the standard input by the user  .
-The programm   also   uses  the   math.h  library as  well asthe time.h and stdlib.h/stdio.h .
-To change the parameters you have to change the source file and then re-compile the programm (see COMPILATION)
-
--Tournament Selection
-
-	Tournament selection is a selection operator that     determines based 
-	on a random number which of the 2 members of the  species   will    be 
-	promoted and replace the other.Tournament selection favors  the fitter
-	of the competing members 
-	Reference [http://watchmaker.uncommons.org/manual/ch03s04.html]
-
-
-Initial Parameters
-
---------------------------------------------------------------------------------
-
-Name 	Value 		Description
-
---------------------------------------------------------------------------------
-
-POPL 	10		Sets the population number 
-GENS 	50		Sets the maximum number of generations
-p_mut	0.1		Sets the possibility of mutation 
-p_cross 0.3 		Sets the possibility of crossover
-p_tourn 0.65		Sets the possibility of the fittest wining the tournament 
-FITTEST LENGTH^2	Sets the FT parameter 
-
---------------------------------------------------------------------------------
-
---Return Values 
+	$./guessga
+## Return Values 
 1 Evolution ended after reaching the max generations 
 2 Evolution ended after reaching the Fittest threshold 
 
-----Libraries
-stdio
-stdlib
-time 
-math.h 
+## Genetic Operators 
+Currently tournament selction ,roulette wheel selection ,mutation ,single point crossover .The paramaters for the genetic operators are defined in the source code .
