@@ -52,7 +52,7 @@ int main(void)
 
 	int    maxf_archive[GENS+1] ;
 	double avf_archive[GENS+1] ;
-	double bins[POPL + 1] ;
+	double bins[POPL] ;
 
 	double fitsum ;
 	double sumofbins = 0 ;
@@ -66,17 +66,45 @@ int main(void)
 
 	srand(time(NULL)) ;
 
-	clear_array(f_archive,GENS+1,LENGTH);
-	clear_array(avf_archive,1,GENS+1);
+	for (i = 0; i < GENS + 1; ++i)
+	{
+		for (j = 0;j < LENGTH; ++j)
+		{
+			f_archive[i][j] = 0 ;
+		}
+	}
 
+	/* Set values for maximum fitness and average fitness arrays */
+	for (i = 0; i < GENS + 1; ++i)
+	{
+		maxf_archive[i] = -1 ;
+		avf_archive[i] = 0.0 ;
+	}
 
 	/* Initialize population */
-	init_population(population,POPL,LENGTH);
+	for (i = 0; i < POPL; ++i)
+	{
+		for (j = 0; j < LENGTH; ++j)
+		{
+			population[i][j] = random0or1() ; 
+		}
+	}
 
-	get_average_population(population,specimen,POPL,LENGTH);
-	get_max_member(population,specimen,POPL,LENGTH,&max_place);
+	/*Find fittest and average of the 0th generation */
+	max_place = 0 ;
+	for (i = 0; i < POPL; ++i)
+	{
+		fit_temp = fitness(specimen,population[i],LENGTH);
+		avf_archive[gencount] += fit_temp ;
+		if (fit_temp > maxf_archive[gencount])
+		{
+			maxf_archive[gencount] = fit_temp ;
+			max_place = i ;
+		}
+	}
+	avf_archive[gencount] = avf_archive[gencount] / ((double) POPL) ;
 
-	/* Saves max population */
+	/* Saves max poplulation */
 	for (i = 0; i < LENGTH; ++i)
 	{
 		f_archive[gencount][i] = population[max_place][i] ;
@@ -87,9 +115,18 @@ int main(void)
 	while(gencount < GENS)
 	{
 		
-		clear_array(bins,1,POPL);
-		clear_array(temppop,POPL,LENGTH);
 		for (i = 0; i < POPL; ++i)
+		{
+			bins[i] = 0 ;
+		}
+
+		for (i = 0; i < POPL; ++i)
+		{
+			for (j = 0; j < LENGTH; ++j)
+				{
+					temppop[i][j] = 0 ;
+				}	
+		}
 
 		/* Start of selection proccess */
 		fitsum = 0.0 ;
@@ -100,14 +137,42 @@ int main(void)
 
 		/* Create ranges */
 		sumofbins = 0 ;
-		bins[0] = 0 ;
-		for (i = 1; i < POPL + 1; ++i)
+		for (i = 0; i < POPL; ++i)
 		{
-			bins[i] = (fitness(specimen,population[i]) / fitsum) + bins[i-1] ; 
+			bins[i] = (fitness(specimen ,population[i] ,LENGTH) / fitsum) + sumofbins ;
+			sumofbins += (fitness(specimen ,population[i] ,LENGTH) / fitsum) ;
 		}
 
-
-		roullette_wheel_selection(temppop,POPL,LENGTH,population,bins);
+		/* Create temporary population */
+		tempcount = 0 ;
+		while(tempcount < POPL)
+		{
+		 	check_sel = random0to1() ;
+		 	for (i = 0; i < POPL; ++i)
+		 	{
+		 		if (i == 0 )
+		 		{
+		 			if (0 <= check_sel && check_sel < bins[i] )
+		 			{
+		 				for (k = 0; k < LENGTH; ++k)
+		 				{
+		 					temppop[tempcount][k] = population[i][k] ;
+		 				}
+		 				tempcount++;
+		 			}
+		 		}
+		 		else
+		 		{
+		 			if (bins[i-1] <= check_sel && check_sel < bins[i]){
+		 				for (k = 0; k < LENGTH; ++k)
+		 					{
+								temppop[tempcount][k] = population[i][k] ;
+		 					}
+		 				tempcount++;
+		 			}
+		 		}
+		 	}
+		}
 
 		/* Tournament Selection */
 		/* See README for details on method */
@@ -163,12 +228,27 @@ int main(void)
 		}
 
 		/* Mutation */
+		check_mut = 0 ;
 		for (i = 0; i < POPL; ++i)
 		{
-			mutate(temppop[i],LENGTH,p_mut);
+			for (j = 0; j < LENGTH; ++j)
+			{
+				check_mut = random0to1() ;
+				if (check_mut < p_mut)
+				{
+					temppop[i][j] = (temppop[i][j] == 0 ? 1 : 0 ) ;
+				}
+			}
 		}
 
-		merge_temp(temppop,population,POPL,LENGTH);
+		/*Temporary population becomes current */
+		for (i = 0; i < POPL; ++i)
+		{
+			for (j = 0; j < LENGTH; ++j)
+			{
+				population[i][j] = temppop[i][j] ;
+			}
+		}
 		
 		/* Find fittest and average of this population */
 		max_place = 0 ;
