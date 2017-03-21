@@ -68,15 +68,23 @@ void merge_temp(int **x,int **y,int size ,int length) /* Makes temporary populat
         }
     }
 }
-void clear_array(int **x,int size,int length)     /* Sets all values of array to zero */
+void clear_array_2d(int **x,int size,int length)     /* Sets all values of array to zero */
 {
     int i , j ;
     for (i = 0; i < size; ++i)
     {
-        for (j = 0; i < length; ++j)
+        for (j = 0; j < length; ++j)
         {
             x[i][j] = 0 ;
         }
+    }
+}
+void clear_array_1d(int *x,int size)
+{
+    int i ;
+    for (i = 0; i < size; ++i)
+    {
+        x[i] = 0 ;
     }
 }
 void init_population(int **population,int size ,int length)
@@ -95,7 +103,7 @@ double get_average_population(int **x,int *specimen ,int size ,int length)
     int sum = 0 ,i ;
     for (i = 0; i < size; ++i)
     {
-        sum += fitness(x[i],specimen,length);
+        sum += fitness(specimen,x[i],length);
     }
     return ((double) (sum / size));
 }
@@ -103,7 +111,7 @@ int get_max_member(int **x ,int *specimen,int size,int length,int *place)
 {
     int i ,max = 0 ,tmp ;
     max = fitness(x[0],specimen,length);
-
+    *place = 0 ;
     for (i = 1; i < size; ++i)
     {
         tmp = fitness(x[i],specimen,length);

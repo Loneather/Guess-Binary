@@ -64,8 +64,8 @@ int main(void)
 
 	srand(time(NULL)) ;
 
-	clear_array(f_archive,GENS+1,LENGTH);
-	clear_array(avf_archive,1,GENS+1);
+	clear_array_2d(f_archive,GENS+1,LENGTH);
+	clear_array_1d(avf_archive,GENS+1);
 
 
 	/* Initialize population */
@@ -85,8 +85,8 @@ int main(void)
 	while(gencount < GENS)
 	{
 		
-		clear_array(bins,1,POPL);
-		clear_array(temppop,POPL,LENGTH);
+		clear_array_1d(bins,POPL);
+		clear_array_2d(temppop,POPL,LENGTH);
 		for (i = 0; i < POPL; ++i)
 
 		/* Start of selection proccess */
@@ -100,7 +100,7 @@ int main(void)
 		bins[0] = 0 ;
 		for (i = 1; i < POPL + 1; ++i)
 		{
-			bins[i] = (fitness(specimen,population[i],LENGTH) / fitsum) + bins[i-1] ; 
+			bins[i] = (fitness(specimen,population[i - 1],LENGTH) / fitsum) + bins[i-1] ; 
 		}
 
 
