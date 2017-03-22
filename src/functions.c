@@ -79,7 +79,7 @@ void clear_array_2d(int **x,int size,int length)     /* Sets all values of array
         }
     }
 }
-void clear_array_1d(int *x,int size)
+void clear_array_1d(double *x,int size)
 {
     int i ;
     for (i = 0; i < size; ++i)

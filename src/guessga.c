@@ -53,6 +53,10 @@ int main(void)
          f_archive[i] = (int *)malloc(LENGTH * sizeof(int));
 
 	int    maxf_archive[GENS+1] ;
+	for (i = 0; i < GENS + 1; ++i)
+	{
+		maxf_archive[i] = 0 ;
+	}
 	double avf_archive[GENS+1] ;
 	double bins[POPL + 1] ;
 
@@ -129,9 +133,9 @@ int main(void)
 
 		merge_temp(temppop,population,POPL,LENGTH);
 		
-		get_max_member(population,specimen,POPL,LENGTH,&max_place);
+		
 		average = get_average_population(population,specimen,POPL,LENGTH);
-		maxf_archive[gencount] = fitness(specimen,population[max_place],LENGTH);
+		maxf_archive[gencount] = get_max_member(population,specimen,POPL,LENGTH,&max_place);
 		for (i = 0; i < LENGTH; ++i)
 		{
 			f_archive[gencount][i] = population[max_place][i] ; /* Store fittest */
@@ -152,7 +156,7 @@ int main(void)
 				printf("%d",f_archive[gencount][i]) ;
 			}
 			printf("\nFound in generation %d", gencount);
-			printf("\nFitness = %d  (%d matches out of %d)\n",maxf_archive[gencount] ,((int) sqrt(((double) maxf_archive[gencount]))),LENGTH);
+			printf("\nFitness = %d  (%d matches out of %d)\n",maxf_archive[gencount] ,((int) sqrt(maxf_archive[gencount])),LENGTH);
 			return 2 ;
 		}
 		gencount++;
@@ -180,6 +184,6 @@ int main(void)
 	}
 	/* Print results */
 	printf("\nFound in generation %d", findplace);
-	printf("\nFitness = %d  (%d matches out of %d)\n",maxf_archive[findplace] ,((int) sqrt(((double) maxf_archive[findplace]))),LENGTH);
+	printf("\nFitness = %d  (%d matches out of %d)\n",maxf_archive[findplace] ,((int) sqrt(maxf_archive[findplace])),LENGTH);
 	return 1 ;
 }
