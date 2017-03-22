@@ -12,8 +12,16 @@ const double p_mut = 0.1 ;
 const double p_cross = 0.3 ;
 const double p_tourn = 0.65 ;
 
-int main(void)
+int main(int argc ,char *argv[])
 {
+	if (argc > 2)
+	{
+		srand(atoi(argv[2]));
+	}
+	else
+		srand(time(NULL));
+
+
 	int   i ,FITTEST = 0 ;
 	char  ch = 0 ;
 	int   char_count = 0 ,LENGTH = 0 ,buf[100];
@@ -66,7 +74,6 @@ int main(void)
 	int    max_place ;
 	int    findmax ,findplace ;
 	double average ;
-	srand(time(NULL)) ;
 
 	clear_array_2d(f_archive,GENS+1,LENGTH);
 	clear_array_1d(avf_archive,GENS+1);
