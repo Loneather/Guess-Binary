@@ -105,7 +105,7 @@ double get_average_population(int **x,int *specimen ,int size ,int length)
     {
         sum += fitness(specimen,x[i],length);
     }
-    return ((double) (sum / size));
+    return (((double) sum) / size);
 }
 int get_max_member(int **x ,int *specimen,int size,int length,int *place)
 {

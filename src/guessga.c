@@ -61,7 +61,7 @@ int main(void)
 	int    counta ,countb ;
 	int    max_place ;
 	int    findmax ,findplace ;
-
+	double average ;
 	srand(time(NULL)) ;
 
 	clear_array_2d(f_archive,GENS+1,LENGTH);
@@ -71,7 +71,7 @@ int main(void)
 	/* Initialize population */
 	init_population(population,POPL,LENGTH);
 
-	get_average_population(population,specimen,POPL,LENGTH);
+	average = get_average_population(population,specimen,POPL,LENGTH);
 	get_max_member(population,specimen,POPL,LENGTH,&max_place);
 	maxf_archive[0] = fitness(specimen,population[max_place],LENGTH);
 	/* Saves max population */
@@ -130,7 +130,7 @@ int main(void)
 		merge_temp(temppop,population,POPL,LENGTH);
 		
 		get_max_member(population,specimen,POPL,LENGTH,&max_place);
-		get_average_population(population,specimen,POPL,LENGTH);
+		average = get_average_population(population,specimen,POPL,LENGTH);
 		maxf_archive[gencount] = fitness(specimen,population[max_place],LENGTH);
 		for (i = 0; i < LENGTH; ++i)
 		{
@@ -138,7 +138,7 @@ int main(void)
 		}
 		
 		/* Print the results of current generation */		
-		printf("Generation %d: Best Fitness = %d  Average Fitness = %04.4f \n" ,gencount ,maxf_archive[gencount] ,avf_archive[gencount]);
+		printf("Generation %d: Best Fitness = %d  Average Fitness = %04.4f \n" ,gencount ,maxf_archive[gencount] ,average);
 		if (maxf_archive[gencount] >= FITTEST)
 		{
 			printf("\nYour number : ");

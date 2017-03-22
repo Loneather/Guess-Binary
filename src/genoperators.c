@@ -14,7 +14,7 @@ void mutate(int *x,int size,double p_mut)
 		x[place] = (x[place] ? 0 : 1);
 	}
 }
-void roullete_wheel_selection(int **temppop,int size,int length,int **population,int *bins)
+void roullete_wheel_selection(int **temppop,int size,int length,int **population,double *bins)
 {
 	double check_sel ;
 	int tempcount ,i ,j ;
@@ -29,7 +29,7 @@ void roullete_wheel_selection(int **temppop,int size,int length,int **population
 	 		{
 	 			for (j = 0; j < length; ++j)
 	 			{
-	 				temppop[i][j] = population[i][j] ;
+	 				temppop[tempcount][j] = population[i - 1][j] ;
 	 			}
 	 		}
 	 	}
