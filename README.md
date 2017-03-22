@@ -17,7 +17,9 @@ While on main folder run :
 
 On the main folder run :
 
-	$./guessga
+	$./guessga -s [SEED]
+
+	-s OPTIONAL : it determines the seed that the random function will use .So that you can reproduce your results
 ## Return Values 
 1 Evolution ended after reaching the max generations 
 2 Evolution ended after reaching the Fittest threshold 
