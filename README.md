@@ -20,9 +20,6 @@ On the main folder run :
 	$./guessga -s [SEED]
 
 	-s OPTIONAL : it determines the seed that the random function will use .So that you can reproduce your results
-## Return Values 
-1 Evolution ended after reaching the max generations 
-2 Evolution ended after reaching the Fittest threshold 
 
 ## Genetic Operators 
 Currently tournament selction ,roulette wheel selection ,mutation ,single point crossover .The paramaters for the genetic operators are defined in the source code .
