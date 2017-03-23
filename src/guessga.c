@@ -164,7 +164,22 @@ int main(int argc ,char *argv[])
 			}
 			printf("\nFound in generation %d", gencount);
 			printf("\nFitness = %d  (%d matches out of %d)\n",maxf_archive[gencount] ,((int) sqrt(maxf_archive[gencount])),LENGTH);
-			return 2 ;
+			for (i = 0; i < POPL; ++i)
+			{
+				free(population[i]);
+			}
+			free(population);
+			for (i = 0; i < POPL; ++i)
+			{
+				free(temppop[i]);
+			}
+			free(temppop);
+			for (i = 0; i < GENS + 1; ++i)
+			{
+				free(f_archive[i]);
+			}
+			free(f_archive);
+			return 0 ;
 		}
 		gencount++;
 	}
@@ -192,5 +207,21 @@ int main(int argc ,char *argv[])
 	/* Print results */
 	printf("\nFound in generation %d", findplace);
 	printf("\nFitness = %d  (%d matches out of %d)\n",maxf_archive[findplace] ,((int) sqrt(maxf_archive[findplace])),LENGTH);
-	return 1 ;
+
+	for (i = 0; i < POPL; ++i)
+	{
+		free(population[i]);
+	}
+	free(population);
+	for (i = 0; i < POPL; ++i)
+	{
+		free(temppop[i]);
+	}
+	free(temppop);
+	for (i = 0; i < GENS + 1; ++i)
+	{
+		free(f_archive[i]);
+	}
+	free(f_archive);
+	return 0 ;
 }
