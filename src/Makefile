@@ -1,7 +1,7 @@
 CC=gcc
 CFLAGS=-Wall
 Math=-lm
-dbg = -g3
+dbg = -g
 
 ../bin/guessga : guessga.o functions.o genoperators.o
 	$(CC) $(CFLAGS) genoperators.o guessga.o functions.o -o ../bin/guessga $(Math) $(dbg)

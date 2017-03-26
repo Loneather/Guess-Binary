@@ -3,15 +3,26 @@
 #include "genoperators.h"
 #include "functions.h"
 
-void mutate(int *x,int size,double p_mut)
+void mutate_genes(int *x,int size,double p_mut)	/*Performs mutation each gene of each cromosome */
 {
-	double p = random0to1();
-	int place ; 
-
-	place = rand_interval(size - 1);
-	if (p < p_mut)
+	int i ;
+	double p ;
+	for (i = 0; i < size; i++)
 	{
-		x[place] = (x[place] ? 0 : 1);
+		p = random0to1();
+		if (p < p_mut)
+		{
+			x[i] = (x[i] == 0 ? 1 : 0 );
+		}
+	}
+
+}
+void mutate_chromosome(int *x,int size,double p_mut)
+{
+	int place = rand_interval(size);
+	double p = random0to1();
+	if (p < p_mut) {
+		x[place] = (x[place] == 1 ? 0 : 1);
 	}
 }
 void roullete_wheel_selection(int **temppop,int size,int length,int **population,double *bins)
@@ -78,12 +89,12 @@ void tournament_selection(int **competitors,int *specimen,int size ,int length,d
 	}
 }
 void crossover(int *a,int *b ,int length)
-{	
+{
     int cross = rand_interval(length - 1) ;
     int temp[length] ;
-    
+
     int i ;
-    for (i = 0; i < cross; ++i)	
+    for (i = 0; i < cross; ++i)
     {
         temp[i] = a[i] ;
         a[i] = b[i] ;

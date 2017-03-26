@@ -2,17 +2,18 @@
 #include <time.h>
 #include <stdlib.h>
 #include <math.h>
+#include <assert.h>
 
 #include "functions.h"
 #include "genoperators.h"
 
 const int POPL = 10 ;
-const int GENS = 50 ;
+const int GENS = 1000 ;
 const double p_mut = 0.1 ;
 const double p_cross = 0.3 ;
 const double p_tourn = 0.65 ;
-
-int main(int argc ,char *argv[])
+const int MAX_CH = 100 ;
+int main(int argc,char *argv[])
 {
 	if (argc > 2)
 	{
@@ -48,6 +49,8 @@ int main(int argc ,char *argv[])
 		specimen[i] = buf[i] ;
 	}
 
+
+	FITTEST = LENGTH*LENGTH ;
     int **population = (int **)malloc(POPL * sizeof(int *));
     for (i=0; i<POPL; i++)
          population[i] = (int *)malloc(LENGTH * sizeof(int));
@@ -90,12 +93,12 @@ int main(int argc ,char *argv[])
 	{
 		f_archive[gencount][i] = population[max_place][i] ;
 	}
-	gencount++;	
+	gencount++;
 
 	/* Start of evolution proccess */
 	while(gencount < GENS)
 	{
-		
+
 		clear_array_1d(bins,POPL);
 		clear_array_2d(temppop,POPL,LENGTH);
 		for (i = 0; i < POPL; ++i)
@@ -105,20 +108,20 @@ int main(int argc ,char *argv[])
 		for (i = 0; i < POPL; ++i)
 		 {
 		 	fitsum += fitness(specimen ,population[i] ,LENGTH) ;
-		 } 
+		 }
 
 		/* Create ranges */
 		bins[0] = 0 ;
 		for (i = 1; i < POPL + 1; ++i)
 		{
-			bins[i] = (fitness(specimen,population[i - 1],LENGTH) / fitsum) + bins[i-1] ; 
+			bins[i] = (fitness(specimen,population[i - 1],LENGTH) / fitsum) + bins[i-1] ;
 		}
 
 
 		roullete_wheel_selection(temppop,POPL,LENGTH,population,bins);
 		tournament_selection(temppop,specimen,POPL,LENGTH,p_tourn);
 
-		/* Crossover */ 
+		/* Crossover */
 		counta = 0 ;
 		countb = 1 ;
 		for (i = 0; i < POPL / 2; ++i)
@@ -135,20 +138,20 @@ int main(int argc ,char *argv[])
 		/* Mutation */
 		for (i = 0; i < POPL; ++i)
 		{
-			mutate(temppop[i],LENGTH,p_mut);
+			mutate_genes(temppop[i],LENGTH,p_mut);
 		}
 
 		merge_temp(temppop,population,POPL,LENGTH);
-		
-		
+
+
 		average = get_average_population(population,specimen,POPL,LENGTH);
 		maxf_archive[gencount] = get_max_member(population,specimen,POPL,LENGTH,&max_place);
 		for (i = 0; i < LENGTH; ++i)
 		{
 			f_archive[gencount][i] = population[max_place][i] ; /* Store fittest */
 		}
-		
-		/* Print the results of current generation */		
+
+		/* Print the results of current generation */
 		printf("Generation %d: Best Fitness = %d  Average Fitness = %04.4f \n" ,gencount ,maxf_archive[gencount] ,average);
 		if (maxf_archive[gencount] >= FITTEST)
 		{
@@ -225,3 +228,38 @@ int main(int argc ,char *argv[])
 	free(f_archive);
 	return 0 ;
 }
+/*int main(int argc ,char *argv[])
+{
+	if (argc > 2)
+	{
+		srand(atoi(argv[2]));
+	}
+	else
+		srand(time(NULL));
+
+	int i ,char_count ,LENGTH ;
+	int buf[MAX_CH];
+	char ch ;
+	printf("Give number for programm to find ");
+	for (i = 0; i < 100; ++i)
+	{
+		scanf("%c" ,&ch);
+		if (ch == '\n' || ch == EOF)
+		{
+			break ;
+		}
+		else{
+			buf[i] = (ch == '0' ? 0 : 1 );
+			char_count++;
+		}
+	}
+
+	LENGTH = char_count ;
+	int *specimen = (int *)malloc(LENGTH * sizeof(int)) ;
+	for (i = 0; i < LENGTH; ++i)
+	{
+		specimen[i] = buf[i] ;
+	}
+	assert(!runevolution(specimen,LENGTH));
+	return 0 ;
+}*/
