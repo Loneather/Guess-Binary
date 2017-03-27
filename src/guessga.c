@@ -15,20 +15,25 @@ const double p_tourn = 0.65 ;
 const int MAX_CH = 100 ;
 int main(int argc,char *argv[])
 {
+	char no_print_flag = 0 ;
 	if (argc > 2)
 	{
 		srand(atoi(argv[2]));
 	}
 	else
 		srand(time(NULL));
+	if (argc > 1)
+	{
+		no_print_flag = 1 ; /* -np Option */
+	}
 
 
 	int   i ,FITTEST = 0 ;
 	char  ch = 0 ;
 	int   char_count = 0 ,LENGTH = 0 ,buf[100];
 
-	printf("Give number for programm to find ");
-	for (i = 0; i < 100; ++i)
+	printf("Give number for programm to find \n");
+	for (i = 0; i < MAX_CH; ++i)
 	{
 		scanf("%c" ,&ch);
 		if (ch == '\n' || ch == EOF)
@@ -152,7 +157,8 @@ int main(int argc,char *argv[])
 		}
 
 		/* Print the results of current generation */
-		printf("Generation %d: Best Fitness = %d  Average Fitness = %04.4f \n" ,gencount ,maxf_archive[gencount] ,average);
+		if(!no_print_flag)
+			printf("Generation %d: Best Fitness = %d  Average Fitness = %04.4f \n" ,gencount ,maxf_archive[gencount] ,average);
 		if (maxf_archive[gencount] >= FITTEST)
 		{
 			printf("\nYour number : ");

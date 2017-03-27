@@ -11,15 +11,15 @@ This project was developed as part of a Programming Course.I am using it exercis
 
 While on main folder run :
 
-	$make 
+	$make
 	$make clean
-## Execution 
+## Execution
 
 On the main folder run :
 
-	$./guessga -s [SEED]
-
+	$./guessga -np -s [SEED]
+	-np :If selected doesn't print the results for each generation
 	-s OPTIONAL : it determines the seed that the random function will use .So that you can reproduce your results
 
-## Genetic Operators 
+## Genetic Operators
 Currently tournament selction ,roulette wheel selection ,mutation ,single point crossover .The paramaters for the genetic operators are defined in the source code .
